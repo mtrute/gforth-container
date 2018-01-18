@@ -5,6 +5,8 @@ ENV LANG C.UTF-8
 ENV HOME /home/gforth
 WORKDIR /home/gforth
 
+ENV VERSION 0.7.9-20180103
+
 RUN apt-get update \
     && mkdir -p /home/gforth \
     && groupadd -r gforth \
@@ -15,7 +17,7 @@ RUN apt-get update \
     && apt-add-repository 'deb https://net2o.de/debian testing main' \
     && curl -L https://net2o.de/bernd@net2o.de-yubikey.pgp.asc | apt-key add -  \
     && apt-get update && apt-get upgrade -y \
-    && apt-get install -y gforth \
+    && apt-get install -y gforth=$VERSION \
     && apt-get autoremove -y \
     && apt-get clean
 
