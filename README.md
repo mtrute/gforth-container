@@ -13,3 +13,11 @@ perform execute call noop  ok
 bye 
 $
 ```
+
+Update the container by editing the version string in the Dockerfile and
+re-run the build command with the matching version tag
+
+```shell
+$ export VERSION=0.7.9-20180103
+$ docker build --force-rm -t gforth:${VERSION} .
+```
