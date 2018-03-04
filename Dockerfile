@@ -1,24 +1,25 @@
-FROM debian:latest
-
-ENV DEBIAN_FRONTEND noninteractive
+FROM alpine:latest
 ENV LANG C.UTF-8
-ENV HOME /home/gforth
-WORKDIR /home/gforth
 
-ENV VERSION 0.7.9-20180103
+RUN apk add --no-cache libltdl libffi \
+    && apk add --no-cache --virtual .fetch-deps \
+        build-base wget m4 libtool file xz tar \
+    && wget http://www.complang.tuwien.ac.at/forth/gforth/Snapshots/current/gforth.tar.xz -O /tmp/gforth.tar.xz \
+    && xzcat /tmp/gforth.tar.xz | tar xf - -C /tmp  \
+    && rm /tmp/gforth.tar.xz \
+    && cd /tmp/gforth-* \
+    && apk add --no-cache --virtual .build-deps \
+        coreutils \
+        gcc \
+        swig \
+        libffi-dev \
+    && ./configure --prefix=/usr --exec-prefix=/usr \
+    && make \
+    && make install \
+    && cd /tmp && rm -rf gforth-* \
+    && apk del .build-deps \
+    && apk del .fetch-deps
 
-RUN apt-get update \
-    && mkdir -p /home/gforth \
-    && groupadd -r gforth \
-    && useradd -r -g gforth -d /home/gforth -s /bin/nologin -c "Gforth User" gforth \
-    && chown -R gforth:gforth $HOME \
-    && apt-get install -y software-properties-common gnupg apt-utils \
-    && apt-get install -y apt-transport-https curl \
-    && apt-add-repository 'deb https://net2o.de/debian testing main' \
-    && curl -L https://net2o.de/bernd@net2o.de-yubikey.pgp.asc | apt-key add -  \
-    && apt-get update && apt-get upgrade -y \
-    && apt-get install -y gforth=$VERSION \
-    && apt-get autoremove -y \
-    && apt-get clean
+# ENTRYPOINT ["gforth"]
 
 CMD [ "gforth" ]
