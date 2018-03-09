@@ -1,17 +1,18 @@
-FROM alpine:latest
+FROM alpine:3.7
 ENV LANG C.UTF-8
 
 ENV VERSION 0.7.9_20180103
 
-RUN apk add --no-cache libltdl libffi \
-    && apk add --no-cache --virtual .fetch-deps \       
+RUN adduser -D gforth \
+    && apk add --no-cache libltdl libffi \
+    && apk add --no-cache --virtual .fetch-deps \
         build-base wget m4 libtool file xz tar \
     && wget http://www.complang.tuwien.ac.at/forth/gforth/Snapshots/$VERSION/gforth-$VERSION.tar.xz -O /tmp/gforth.tar.xz \
     && xzcat /tmp/gforth.tar.xz | tar xf - -C /tmp  \
     && rm /tmp/gforth.tar.xz \
     && cd /tmp/gforth-* \
-    && apk add --no-cache --virtual .build-deps \
-        coreutils gcc swig libffi-dev \
+    && apk add --no-cache --virtual .build-deps freetype-dev \
+        coreutils gcc swig libffi-dev mesa-gles mesa-dev libx11-dev \
     && ./configure --prefix=/usr --exec-prefix=/usr \
     && make \
     && make install \
@@ -19,6 +20,5 @@ RUN apk add --no-cache libltdl libffi \
     && apk del .build-deps \
     && apk del .fetch-deps
 
-# ENTRYPOINT ["gforth"]
-
+USER gforth
 CMD [ "gforth" ]
