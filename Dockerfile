@@ -13,6 +13,7 @@ RUN adduser -D gforth \
     && cd /tmp/gforth-* \
     && apk add --no-cache --virtual .build-deps freetype-dev \
         coreutils gcc swig libffi-dev mesa-gles mesa-dev libx11-dev \
+        glfw-dev harfbuzz-dev gstreamer-dev gst-plugins-base-dev \
     && ./configure --prefix=/usr --exec-prefix=/usr \
     && make \
     && make install \
