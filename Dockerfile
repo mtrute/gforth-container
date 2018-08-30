@@ -1,7 +1,7 @@
 FROM alpine:3.8
 ENV LANG C.UTF-8
 
-ENV VERSION 0.7.9_20180815
+ENV VERSION 0.7.9_20180830
 
 RUN adduser -D gforth \
     && apk add --no-cache libltdl libffi \
