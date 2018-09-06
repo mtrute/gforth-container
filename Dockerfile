@@ -2,9 +2,10 @@ FROM alpine:3.8
 LABEL maintainer="Matthias Trute <mtrute@web.de>"
 ENV LANG C.UTF-8
 
-ENV VERSION 0.7.9_20180830
+ENV VERSION 0.7.9_20180905
 
-RUN apk add --no-cache libltdl libffi \
+RUN adduser -D gforth \
+    && apk add --no-cache libltdl libffi \
     && apk add --no-cache --virtual .fetch-deps wget  file xz tar \
     && wget https://www.complang.tuwien.ac.at/forth/gforth/Snapshots/$VERSION/gforth-$VERSION.tar.xz -O /tmp/gforth.tar.xz \
     && xzcat /tmp/gforth.tar.xz | tar xf - -C /tmp  \
