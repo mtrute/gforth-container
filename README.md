@@ -1,10 +1,10 @@
-Running gforth inside a container.
+Run gforth inside a container.
 
 Example session 
 
 ```shell
-$ docker run -ti mtrute/gforth-container
-Gforth 0.7.9_20180329, Copyright (C) 1995-2016,2017 Free Software Foundation, Inc.
+$ docker run -ti --rm mtrute/gforth-container
+Gforth 0.7.9_20180905, Copyright (C) 1995-2017 Free Software Foundation, Inc.
 Gforth comes with ABSOLUTELY NO WARRANTY; for details type `license'
 Type `help' for basic help
 words 
@@ -14,10 +14,23 @@ bye
 $
 ```
 
-Update the container by editing the version string in the Dockerfile and
-re-run the build command with the matching version tag
+Use a directory mount to access files inside the container
 
 ```shell
-$ export VERSION=0.7.9-20180329
-$ docker build --force-rm -t gforth:${VERSION} .
+$ cat $(pwd)/test.fs
+.( huhu )
+$ docker run -ti --rm -v$(PWD):/work mtrute/gforth-container
+s" /work/test.fs" included huhu ok
+bye
+$
+```
+
+Use the current user id (or any other numeric id) inside the container
+
+```shell
+$ docker run -ti --rm --user $(id -u) mtrute/gforth-container
+s" id" system uid=1001 gid=0(root)
+ ok
+bye
+$
 ```
