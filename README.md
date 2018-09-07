@@ -28,8 +28,10 @@ $
 Use the current user id (or any other numeric id) inside the container
 
 ```shell
+$ id -u
+1001
 $ docker run -ti --rm --user $(id -u) mtrute/gforth-container
-s" id" system uid=1001 gid=0(root)
+s" id -u" system uid=1001
  ok
 bye
 $
