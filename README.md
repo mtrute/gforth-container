@@ -19,7 +19,7 @@ Use a directory mount to access files inside the container
 ```shell
 $ cat $(pwd)/test.fs
 .( huhu )
-$ docker run -ti --rm -v$(PWD):/work mtrute/gforth-container
+$ docker run -ti --rm -v$(pwd):/work mtrute/gforth-container
 s" /work/test.fs" included huhu ok
 bye
 $
