@@ -36,3 +36,6 @@ s" id -u" system uid=1001
 bye
 $
 ```
+
+See https://neu.forth-ev.de/wiki/res/lib/exe/fetch.php/vd-archiv:4d2018-02.pdf
+for more (in German)
