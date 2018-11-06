@@ -14,7 +14,8 @@ bye
 $
 ```
 
-Use a directory mount to access files inside the container
+Use a directory mount to access files from a host directory
+(current work directory in the example) inside the container
 
 ```shell
 $ cat $(pwd)/test.fs
