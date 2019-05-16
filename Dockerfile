@@ -2,7 +2,7 @@ FROM alpine:3.9
 LABEL maintainer="Matthias Trute <mtrute@web.de>"
 ENV LANG C.UTF-8
 
-ENV VERSION 0.7.9_20190509
+ENV VERSION 0.7.9_20190516
 
 RUN adduser -D gforth \
     && apk add --no-cache libltdl libffi \
